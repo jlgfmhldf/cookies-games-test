@@ -9,11 +9,15 @@ function Pagination({
 }) {
 
   const handlePrevClick = () => {
-    onBtnClick('prev')
+    if (!prevDisabled) {
+      onBtnClick('prev')
+    }
   }
 
   const handleNextClick = () => {
-    onBtnClick('next')
+    if (!nextDisabled) {
+      onBtnClick('next')
+    }
   }
 
   return <nav className="pagination" role="navigation" aria-label="pagination">

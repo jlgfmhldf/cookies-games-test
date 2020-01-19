@@ -1,18 +1,26 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { getArticles } from '../../api';
 import Article from '../Article'
 import Pagination from "../Pagination";
+import { usePrevious } from "./helpers";
 import './style.css';
 
+
 function App() {
+  const initialCount = 12;
+
+  const articlesInitialState = {
+    count: 0,
+    items: [],
+  };
+
   const [id, setID] = useState('');
   const prevId = usePrevious(id)
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [articles, setArticles] = useState({});
-  const initialCount = 12;
   const [loadOffset, setLoadOffset] = useState(0);
-  const articlesCount = articles.length;
+  const [articles, setArticles] = useState(articlesInitialState);
+
 
   const loadArticles = () => {
     getArticles({ id, count: initialCount, offset: loadOffset })
@@ -22,7 +30,9 @@ function App() {
         }
 
         if (data.response) {
-          setArticles(data.response.items)
+          const { items, count } = data.response;
+
+          setArticles({ items, count });
         }
 
       })
@@ -30,7 +40,7 @@ function App() {
         setError(error);
       })
       .finally(() => {
-        setIsLoading(false);
+        setLoading(false);
       })
   }
 
@@ -41,29 +51,44 @@ function App() {
       return;
     }
 
-    setLoadOffset(initialCount);
-    setIsLoading(true);
+    setLoading(true);
     setError('');
-    setArticles({})
+    setArticles(articlesInitialState);
+
 
     loadArticles();
   }
 
   const handleChangeID = ({ target }) => {
+    setLoadOffset(0);
     setID(target.value);
   }
 
+
   const handlePaginationBtnClick = (type) => {
+    let offset = undefined;
+
     if (type === 'prev') {
-      setLoadOffset(loadOffset - initialCount)
+      offset = loadOffset - initialCount;
     }
 
     if (type === 'next') {
-      setLoadOffset(loadOffset + initialCount)
+      offset = loadOffset + initialCount;
     }
+
+    setArticles({
+      ...articles,
+      items: [],
+    });
+
+    setLoading(true);
+    setLoadOffset(offset);
+
+    console.log(loadOffset, loading);
 
     loadArticles();
   }
+
 
   const renderArticles = ({
     id: articleID,
@@ -123,8 +148,11 @@ function App() {
           </div>
         </form>
 
-        {articlesCount && <div className="App-articles ">
-          {articles.map(renderArticles)}
+
+        {loadOffset}
+
+        {!!articles.items.length && <div className="App-articles ">
+          {articles.items.map(renderArticles)}
         </div>}
 
         {!id && <div className="App-status">
@@ -140,24 +168,18 @@ function App() {
         </div>}
 
 
-        {articlesCount && <div className="App-pagination">
+        {!!articles.items.length && <div className="App-pagination">
           <Pagination
             onBtnClick={handlePaginationBtnClick}
-            prevDisabled={loadOffset < 0}
-            nextDisabled={loadOffset > articlesCount}
+            prevDisabled={loadOffset <= 0}
+            nextDisabled={loadOffset >= articles.count}
           />
         </div>}
+
+
       </div>
     </div>
   );
-}
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
 }
 
 export default App;
