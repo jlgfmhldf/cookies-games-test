@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getArticles } from '../../api';
+import Article from '../Article'
 import './style.css';
-import 'bulma/css/bulma.css'
 
-function Index() {
+function App() {
   const [id, setID] = useState('');
+  const prevId = usePrevious(id)
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [articles, setArticles] = useState({})
@@ -12,11 +13,15 @@ function Index() {
   const handleFormSubmit = event  => {
     event.preventDefault();
 
+    if (id === prevId) {
+      return;
+    }
+
     setIsLoading(true);
     setError('');
     setArticles({})
 
-    getArticles({ id, count: 20 })
+    getArticles({ id, count: 12 })
       .then(data => {
         if (data.error) {
           setError(data.error.error_msg);
@@ -39,6 +44,36 @@ function Index() {
     setID(target.value);
   }
 
+  const renderArticles = ({
+    text,
+    attachments
+   }) => {
+    const props = {
+      text,
+    };
+
+    if (attachments) {
+      const image = attachments.find(({ type }) => type === 'photo');
+
+      if (image) {
+        props.image = image.photo.sizes.find(({type}) => type === 'r').url;
+      }
+
+    }
+
+
+
+
+
+    return (
+      <div className="App-article">
+        <Article {...props} />
+      </div>
+    )
+  }
+
+  console.log(articles)
+
   return (
     <div className="App">
       <div className="container">
@@ -54,8 +89,8 @@ function Index() {
           </div>
         </form>
 
-        {articles.length && <div className="App-articles">
-          {articles.length}
+        {articles.length && <div className="App-articles ">
+          {articles.map(renderArticles)}
         </div>}
 
         {!id && <div className="App-status">
@@ -76,4 +111,12 @@ function Index() {
   );
 }
 
-export default Index;
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
+export default App;

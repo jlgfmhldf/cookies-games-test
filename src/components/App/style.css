@@ -19,4 +19,20 @@
 
 .App-articles {
   margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.App-article {
+  width: 32%;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1400px) {
+  
+  .App-article {
+    width: 48%;
+  }
 }

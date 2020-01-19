@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/index';
 import * as serviceWorker from './serviceWorker';
+import 'bulma/css/bulma.css'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
