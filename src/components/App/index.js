@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { getArticles } from '../../api';
 import Article from '../Article'
+import Pagination from "../Pagination";
 import './style.css';
 
 function App() {
@@ -8,20 +9,13 @@ function App() {
   const prevId = usePrevious(id)
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [articles, setArticles] = useState({})
+  const [articles, setArticles] = useState({});
+  const initialCount = 12;
+  const [loadOffset, setLoadOffset] = useState(0);
+  const articlesCount = articles.length;
 
-  const handleFormSubmit = event  => {
-    event.preventDefault();
-
-    if (id === prevId) {
-      return;
-    }
-
-    setIsLoading(true);
-    setError('');
-    setArticles({})
-
-    getArticles({ id, count: 12 })
+  const loadArticles = () => {
+    getArticles({ id, count: initialCount, offset: loadOffset })
       .then(data => {
         if (data.error) {
           setError(data.error.error_msg);
@@ -40,8 +34,35 @@ function App() {
       })
   }
 
+  const handleFormSubmit = event  => {
+    event.preventDefault();
+
+    if (id === prevId) {
+      return;
+    }
+
+    setLoadOffset(initialCount);
+    setIsLoading(true);
+    setError('');
+    setArticles({})
+
+    loadArticles();
+  }
+
   const handleChangeID = ({ target }) => {
     setID(target.value);
+  }
+
+  const handlePaginationBtnClick = (type) => {
+    if (type === 'prev') {
+      setLoadOffset(loadOffset - initialCount)
+    }
+
+    if (type === 'next') {
+      setLoadOffset(loadOffset + initialCount)
+    }
+
+    loadArticles();
   }
 
   const renderArticles = ({
@@ -57,7 +78,7 @@ function App() {
 
     if (attachments) {
       const image = attachments.find(({ type }) => type === 'photo');
-      const link = attachments.find(({ type }) => type === 'link')
+      const link = attachments.find(({ type }) => type === 'link');
 
       if (image) {
         props.image = image.photo.sizes.find(({type}) => type === 'r').url;
@@ -91,7 +112,7 @@ function App() {
           </div>
         </form>
 
-        {articles.length && <div className="App-articles ">
+        {articlesCount && <div className="App-articles ">
           {articles.map(renderArticles)}
         </div>}
 
@@ -108,6 +129,13 @@ function App() {
         </div>}
 
 
+        {articlesCount && <div className="App-pagination">
+          <Pagination
+            onBtnClick={handlePaginationBtnClick}
+            prevDisabled={loadOffset < 0}
+            nextDisabled={loadOffset > articlesCount}
+          />
+        </div>}
       </div>
     </div>
   );

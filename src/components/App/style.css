@@ -30,9 +30,21 @@
   margin-bottom: 1rem;
 }
 
+.App-pagination {
+  width: 180px;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 1400px) {
-  
   .App-article {
     width: 48%;
+  }
+}
+
+@media (max-width: 640px) {
+  .App-article {
+    width: 100%;
   }
 }
