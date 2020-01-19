@@ -68,6 +68,7 @@ function App() {
   const renderArticles = ({
     id: articleID,
     owner_id,
+    copy_history,
     text,
     attachments
    }) => {
@@ -76,12 +77,22 @@ function App() {
       link: `https://vk.com/wall${owner_id}_${articleID}`
     };
 
+    // Не вывожу репост
+    if (copy_history) {
+      return;
+    }
+
+
     if (attachments) {
-      const image = attachments.find(({ type }) => type === 'photo');
+      const images = attachments.find(({ type }) => type === 'photo');
       const link = attachments.find(({ type }) => type === 'link');
 
-      if (image) {
-        props.image = image.photo.sizes.find(({type}) => type === 'r').url;
+      if (images) {
+        const imagesSizes = images.photo.sizes;
+        const imageR = imagesSizes.find(({type}) => type === 'r');
+
+
+        props.image = (imageR && imageR.url) || (imagesSizes[3] && imagesSizes[3].url);
       }
 
       if (link) {
