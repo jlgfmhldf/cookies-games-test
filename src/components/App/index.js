@@ -45,34 +45,36 @@ function App() {
   }
 
   const renderArticles = ({
+    id: articleID,
+    owner_id,
     text,
     attachments
    }) => {
     const props = {
       text,
+      link: `https://vk.com/wall${owner_id}_${articleID}`
     };
 
     if (attachments) {
       const image = attachments.find(({ type }) => type === 'photo');
+      const link = attachments.find(({ type }) => type === 'link')
 
       if (image) {
         props.image = image.photo.sizes.find(({type}) => type === 'r').url;
       }
 
+      if (link) {
+        props.additionalLink = link.link.url;
+      }
+
     }
 
-
-
-
-
     return (
-      <div className="App-article">
+      <div className="App-article" key={articleID}>
         <Article {...props} />
       </div>
     )
   }
-
-  console.log(articles)
 
   return (
     <div className="App">

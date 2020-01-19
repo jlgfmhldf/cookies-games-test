@@ -8,9 +8,11 @@ function Article({
   additionalLink,
   image,
 }) {
-  return <a href="TODO" target="_blank"  className="Article card">
+  return <a href={link} target="_blank"  className="Article card">
 
     <div className="card-content">
+      {additionalLink && <p className="title is-4">{additionalLink}</p>}
+
       <div className="Article-text content">
         {text && text}
       </div>
