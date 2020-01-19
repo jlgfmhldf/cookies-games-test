@@ -1,0 +1,22 @@
+.App {
+  min-height: 100vh;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  
+}
+
+.App-form {
+
+}
+
+.App-status {
+  margin-top: 3rem;
+}
+
+.App-status--error {
+  color: hsl(348, 100%, 61%);
+}
+
+.App-articles {
+  margin-top: 3rem;
+}
