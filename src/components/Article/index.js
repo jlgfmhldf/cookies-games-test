@@ -14,6 +14,7 @@ function Article({
       {additionalLink && <p className="title is-4">{additionalLink}</p>}
 
       {text && <div className="Article-text content">
+        {text}
       </div>}
     </div>
 
