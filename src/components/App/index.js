@@ -81,8 +81,8 @@ function App() {
       <div className="container">
         <form className="App-form" onSubmit={handleFormSubmit}>
 
-          <div className="field is-grouped">
-            <div className="control">
+          <div className="field  is-grouped">
+            <div className="control is-expanded">
               <input type="text" className="input" placeholder="ID пользователя или группы Вконтакте" onChange={handleChangeID}/>
             </div>
             <div className="control">

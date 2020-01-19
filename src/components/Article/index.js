@@ -13,9 +13,8 @@ function Article({
     <div className="card-content">
       {additionalLink && <p className="title is-4">{additionalLink}</p>}
 
-      <div className="Article-text content">
-        {text && text}
-      </div>
+      {text && <div className="Article-text content">
+      </div>}
     </div>
 
     {image && <div className="card-image">
