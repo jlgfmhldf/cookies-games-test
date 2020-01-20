@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/cookies-games-test/static/css/main.15bc10af.chunk.css",
+    "main.js": "/cookies-games-test/static/js/main.344f086d.chunk.js",
+    "main.js.map": "/cookies-games-test/static/js/main.344f086d.chunk.js.map",
+    "runtime-main.js": "/cookies-games-test/static/js/runtime-main.4a399250.js",
+    "runtime-main.js.map": "/cookies-games-test/static/js/runtime-main.4a399250.js.map",
+    "static/css/2.70d9d258.chunk.css": "/cookies-games-test/static/css/2.70d9d258.chunk.css",
+    "static/js/2.f60640bf.chunk.js": "/cookies-games-test/static/js/2.f60640bf.chunk.js",
+    "static/js/2.f60640bf.chunk.js.map": "/cookies-games-test/static/js/2.f60640bf.chunk.js.map",
+    "index.html": "/cookies-games-test/index.html",
+    "precache-manifest.ac5be304aa2384e1c5acae39ddc72654.js": "/cookies-games-test/precache-manifest.ac5be304aa2384e1c5acae39ddc72654.js",
+    "service-worker.js": "/cookies-games-test/service-worker.js",
+    "static/css/2.70d9d258.chunk.css.map": "/cookies-games-test/static/css/2.70d9d258.chunk.css.map",
+    "static/css/main.15bc10af.chunk.css.map": "/cookies-games-test/static/css/main.15bc10af.chunk.css.map",
+    "static/js/2.f60640bf.chunk.js.LICENSE": "/cookies-games-test/static/js/2.f60640bf.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4a399250.js",
+    "static/css/2.70d9d258.chunk.css",
+    "static/js/2.f60640bf.chunk.js",
+    "static/css/main.15bc10af.chunk.css",
+    "static/js/main.344f086d.chunk.js"
+  ]
+}
