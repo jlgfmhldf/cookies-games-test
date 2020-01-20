@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { getArticles } from '../../api';
 import Article from '../Article'
 import Pagination from "../Pagination";
 import { usePrevious } from "./helpers";
 import './style.css';
-
 
 function App() {
   const initialCount = 12;
@@ -17,10 +16,10 @@ function App() {
   const [id, setID] = useState('');
   const prevId = usePrevious(id)
   const [loading, setLoading] = useState(false);
+  const [needLoading, setNeedLoading] = useState(false);
   const [error, setError] = useState('');
   const [loadOffset, setLoadOffset] = useState(0);
   const [articles, setArticles] = useState(articlesInitialState);
-
 
   const loadArticles = () => {
     getArticles({ id, count: initialCount, offset: loadOffset })
@@ -47,26 +46,18 @@ function App() {
   const handleFormSubmit = event  => {
     event.preventDefault();
 
-    if (id === prevId) {
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    setArticles(articlesInitialState);
-
-
-    loadArticles();
+    setNeedLoading(true);
   }
 
   const handleChangeID = ({ target }) => {
+    setError('');
     setLoadOffset(0);
     setID(target.value);
   }
 
 
   const handlePaginationBtnClick = (type) => {
-    let offset = undefined;
+    let offset;
 
     if (type === 'prev') {
       offset = loadOffset - initialCount;
@@ -76,17 +67,9 @@ function App() {
       offset = loadOffset + initialCount;
     }
 
-    setArticles({
-      ...articles,
-      items: [],
-    });
-
-    setLoading(true);
     setLoadOffset(offset);
+    setNeedLoading(true);
 
-    console.log(loadOffset, loading);
-
-    loadArticles();
   }
 
 
@@ -133,6 +116,29 @@ function App() {
     )
   }
 
+  useEffect(function () {
+    console.log(id, prevId)
+    if (needLoading && id) {
+      loadArticles();
+
+      setArticles({
+        ...articles,
+        items: [],
+      });
+
+      setLoading(true);
+      setError('');
+      setArticles(articlesInitialState);
+      setNeedLoading(false);
+
+    }
+
+  }, [
+    loadOffset,
+    id,
+    needLoading,
+  ]);
+
   return (
     <div className="App">
       <div className="container">
@@ -147,9 +153,6 @@ function App() {
             </div>
           </div>
         </form>
-
-
-        {loadOffset}
 
         {!!articles.items.length && <div className="App-articles ">
           {articles.items.map(renderArticles)}
