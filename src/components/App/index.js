@@ -148,7 +148,7 @@ function App() {
               <input type="text" className="input" placeholder="ID пользователя или группы Вконтакте" onChange={handleChangeID}/>
             </div>
             <div className="control">
-              <button className="button is-link" onClick={handleFormSubmit}>Submit</button>
+              <button className="button is-link" onClick={handleFormSubmit}>Поиск</button>
             </div>
           </div>
         </form>
