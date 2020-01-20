@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { getArticles } from '../../api';
 import Article from '../Article'
 import Pagination from "../Pagination";
-import { usePrevious } from "./helpers";
 import './style.css';
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
   };
 
   const [id, setID] = useState('');
-  const prevId = usePrevious(id)
   const [loading, setLoading] = useState(false);
   const [needLoading, setNeedLoading] = useState(false);
   const [error, setError] = useState('');
