@@ -117,7 +117,6 @@ function App() {
   }
 
   useEffect(function () {
-    console.log(id, prevId)
     if (needLoading && id) {
       loadArticles();
 

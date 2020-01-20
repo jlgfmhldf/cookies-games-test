@@ -21,8 +21,8 @@ function Pagination({
   }
 
   return <nav className="pagination" role="navigation" aria-label="pagination">
-    <a className="pagination-previous" onClick={handlePrevClick} disabled={prevDisabled}>Назад</a>
-    <a className="pagination-next" onClick={handleNextClick} disabled={nextDisabled}>Вперёд</a>
+    <button className="pagination-previous" onClick={handlePrevClick} disabled={prevDisabled}>Назад</button>
+    <button className="pagination-next" onClick={handleNextClick} disabled={nextDisabled}>Вперёд</button>
 
   </nav>
 }

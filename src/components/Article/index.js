@@ -8,7 +8,7 @@ function Article({
   additionalLink,
   image,
 }) {
-  return <a href={link} target="_blank"  className="Article card">
+  return <a href={link} target="_blank" rel="noopener noreferrer" className="Article card">
 
     <div className="card-content">
       {additionalLink && <p className="title is-4">{additionalLink}</p>}
@@ -20,7 +20,7 @@ function Article({
 
     {image && <div className="card-image">
       <figure className="image">
-        <img src={image} alt="Placeholder image" />
+        <img src={image} alt="" />
       </figure>
     </div>}
   </a>
